@@ -26,3 +26,8 @@ gem 'pg'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0'
+  gem 'pry-byebug'
+end
