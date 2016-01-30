@@ -2,6 +2,27 @@
 
 # Student Tracker API
 
+## Feature Roadmap
+
+**Completed Features:**
+
+-   None
+
+**Planned Features:**
+
+-   Group students by cohort.
+-   Record attendances for students.
+
+**Future Features:**
+
+-   Store and access detailed student profiles.
+-   Manage student scores on diagnostics.
+-   Allow users to log in and access the application.
+-   Include user permissions to control what users are allowed to do.
+-   Distinguish between excused tardies/absences and unexcused tardies/absences.
+-   Send warning emails to students with attendance issues.
+-   Use the GitHub API to track pull requests for diagnostics.
+
 ## [License](LICENSE)
 
 Source code distributed under the MIT license. Text and other assets copyright
