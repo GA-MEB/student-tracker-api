@@ -17,12 +17,12 @@ RSpec.describe Cohort, type: :model do
   it "is invalid without a start date" do
     no_start_date = Cohort.new(start_date: nil)
     no_start_date.valid?
-    expect(no_start_date.errors[:cohort_number]).to include("can't be blank")
+    expect(no_start_date.errors[:start_date]).to include("can't be blank")
   end
   it "is invalid without an end date" do
     no_end_date = Cohort.new(end_date: nil)
     no_end_date.valid?
-    expect(no_end_date.errors[:cohort_number]).to include("can't be blank")
+    expect(no_end_date.errors[:end_date]).to include("can't be blank")
   end
   it "is invalid with a cohort number less than 1" do
     cohort_number_zero = Cohort.new(cohort_number: 0)
