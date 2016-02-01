@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20160131173204) do
   create_table "cohorts", force: :cascade do |t|
     t.integer  "cohort_number", null: false
     t.date     "start_date",    null: false
-    t.date     "end_date"
+    t.date     "end_date",      null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end

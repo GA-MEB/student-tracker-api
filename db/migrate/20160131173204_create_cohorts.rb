@@ -3,7 +3,7 @@ class CreateCohorts < ActiveRecord::Migration
     create_table :cohorts do |t|
       t.integer :cohort_number, null: false
       t.date :start_date, null: false
-      t.date :end_date
+      t.date :end_date, null: false
       t.timestamps null: false
     end
   end
