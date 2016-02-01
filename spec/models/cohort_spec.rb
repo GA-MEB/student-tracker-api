@@ -28,22 +28,22 @@ RSpec.describe Cohort, type: :model do
     string_cohort_number = Cohort.new(cohort_number: "A string")
     string_cohort_number.valid?
     expect(string_cohort_number.errors[:cohort_number]).to include(
-      "must be an integer"
+      "must be an integer greater than zero"
     )
     float_cohort_number = Cohort.new(cohort_number: 3.3)
     float_cohort_number.valid?
     expect(float_cohort_number.errors[:cohort_number]).to include(
-      "must be an integer"
+      "must be an integer greater than zero"
     )
   end
   it "is invalid with a cohort number less than 1" do
     cohort_number_zero = Cohort.new(cohort_number: 0)
     negative_cohort_number = Cohort.new(cohort_number: -1)
     expect(cohort_number_zero.errors[:cohort_number]).to include(
-      "can't be less than one"
+      "must be an integer greater than zero"
     )
     expect(negative_cohort_number.errors[:cohort_number]).to include(
-      "can't be less than one"
+      "must be an integer greater than zero"
     )
   end
   it "is invalid with a non-unique cohort number" do
