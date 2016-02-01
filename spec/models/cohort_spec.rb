@@ -38,10 +38,12 @@ RSpec.describe Cohort, type: :model do
   end
   it "is invalid with a cohort number less than 1" do
     cohort_number_zero = Cohort.new(cohort_number: 0)
-    negative_cohort_number = Cohort.new(cohort_number: -1)
+    cohort_number_zero.valid?
     expect(cohort_number_zero.errors[:cohort_number]).to include(
       "must be an integer greater than zero"
     )
+    negative_cohort_number = Cohort.new(cohort_number: -1)
+    negative_cohort_number.valid?
     expect(negative_cohort_number.errors[:cohort_number]).to include(
       "must be an integer greater than zero"
     )
