@@ -2,6 +2,7 @@ class Cohort < ActiveRecord::Base
   attr_accessor :cohort_number, :start_date, :end_date
   validates :cohort_number, presence: true, numericality: {
     only_integer: true,
+    greater_than: 0,
     message: "must be an integer greater than zero"
   }
   validates :start_date, presence: true
