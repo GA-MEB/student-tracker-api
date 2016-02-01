@@ -25,7 +25,7 @@ RSpec.describe Cohort, type: :model do
     expect(no_end_date.errors[:end_date]).to include("can't be blank")
   end
   it "is invalid with a non-integer cohort number" do
-    string_cohort_number = Cohort.new(cohort_number: "3")
+    string_cohort_number = Cohort.new(cohort_number: "A string")
     string_cohort_number.valid?
     expect(string_cohort_number.errors[:cohort_number]).to include(
       "must be an integer"
