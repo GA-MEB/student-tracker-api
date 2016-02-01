@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20160131173204) do
   enable_extension "plpgsql"
 
   create_table "cohorts", force: :cascade do |t|
-    t.integer  "cohort_number"
+    t.integer  "cohort_number", null: false
     t.date     "start_date"
     t.date     "end_date"
     t.datetime "created_at",    null: false
