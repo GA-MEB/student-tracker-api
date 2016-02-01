@@ -24,6 +24,18 @@ RSpec.describe Cohort, type: :model do
     no_end_date.valid?
     expect(no_end_date.errors[:end_date]).to include("can't be blank")
   end
+  it "is invalid with a non-integer cohort number" do
+    string_cohort_number = Cohort.new(cohort_number: "3")
+    string_cohort_number.valid?
+    expect(string_cohort_number.errors[:cohort_number]).to include(
+      "must be an integer"
+    )
+    float_cohort_number = Cohort.new(cohort_number: 3.3)
+    float_cohort_number.valid?
+    expect(float_cohort_number.errors[:cohort_number]).to include(
+      "must be an integer"
+    )
+  end
   it "is invalid with a cohort number less than 1" do
     cohort_number_zero = Cohort.new(cohort_number: 0)
     negative_cohort_number = Cohort.new(cohort_number: -1)
