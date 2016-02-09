@@ -6,6 +6,5 @@ class Cohort < ActiveRecord::Base
     greater_than: 0,
     message: "must be an integer greater than zero"
   }
-  validates :start_date, presence: true
-  validates :end_date, presence: true
+  validates_presence_of :start_date, :end_date
 end
