@@ -64,6 +64,18 @@ RSpec.describe Cohort, type: :model do
       "must be unique"
     )
   end
+  it "is invalid with an invalid start date or end date" do
+    invalid_start_date = Cohort.new(start_date: "banana")
+    invalid_start_date.valid?
+    expect(invalid_start_date.errors[:start_date]).to include(
+      "must be a date"
+    )
+    invalid_end_date = Cohort.new(end_date: "banana")
+    invalid_end_date.valid?
+    expect(invalid_end_date.errors[:start_date]).to include(
+      "must be a date"
+    )
+  end
   it "is invalid with a start date before 2012" do
     too_early_start = Cohort.new(start_date: '2010-01-01')
     too_early_start.valid?
