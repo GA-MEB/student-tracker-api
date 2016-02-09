@@ -26,4 +26,26 @@ RSpec.describe Student, type: :model do
       "can't be blank"
     )
   end
+  xit "is invalid with a negative student id number" do
+    negative_student_id_number = Student.new(student_id_number: -100)
+    negative_student_id_number.valid?
+    expect(negative_student_id_number[:student_id_number]).to include(
+      "can't be negative"
+    )
+  end
+  xit "is invalid with a student id number over 100 million" do
+    too_big_student_id_number = Student.new(student_id_number: 1000000000)
+    too_big_student_id_number.valid?
+    expect(too_big_student_id_number[:student_id_number]).to include(
+      "can't be greater than 100 million"
+    )
+  end
+  xit "is invalid with a non-unique student id number" do
+    Student.create(student_id_number: 150)
+    duplicate_student_id_number = Student.new(student_id_number: 150)
+    duplicate_student_id_number.valid?
+    expect(duplicate_student_id_number[:student_id_number]).to include(
+      "must be unique"
+    )
+  end
 end
