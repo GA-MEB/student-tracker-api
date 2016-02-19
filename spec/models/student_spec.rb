@@ -26,6 +26,22 @@ RSpec.describe Student, type: :model do
       "can't be blank"
     )
   end
+  xit "is invalid with a non-unique student id number" do
+    Student.create(
+      given_name: 'Alvin',
+      surname: 'Alberts',
+      student_id_number: 230
+    )
+    duplicate_student_id_number = Student.new(
+      given_name: 'Billy',
+      surname: 'Boddy',
+      student_id_number: 230
+    )
+    duplicate_student_id_number.valid?
+    expect(duplicate_student_id_number.errors[:student_id_number]).to include(
+      "must be unique"
+    )
+  end
   xit "is invalid with a negative student id number" do
     negative_student_id_number = Student.new(student_id_number: -100)
     negative_student_id_number.valid?
