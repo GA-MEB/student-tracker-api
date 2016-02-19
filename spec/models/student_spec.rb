@@ -26,7 +26,7 @@ RSpec.describe Student, type: :model do
       "can't be blank"
     )
   end
-  xit "is invalid with a non-unique student id number" do
+  it "is invalid with a non-unique student id number" do
     Student.create(
       given_name: 'Alvin',
       surname: 'Alberts',
