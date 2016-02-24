@@ -1,12 +1,12 @@
 class Cohort < ActiveRecord::Base
-  validates :cohort_number, presence: true,
-  uniqueness: {message: "must be unique"},
-  numericality: {
-    only_integer: true,
-    greater_than: 0,
-    message: "must be an integer greater than zero"
-  }
-  validates_presence_of :start_date, :end_date
+  validates_presence_of :start_date, :end_date, :cohort_number
+  validates :cohort_number,
+    uniqueness: {message: "must be unique"},
+    numericality: {
+      only_integer: true,
+      greater_than: 0,
+      message: "must be an integer greater than zero"
+    }
   validate :start_date_and_end_date_are_dates,
            :start_date_in_valid_year,
            :start_and_end_on_weekdays,
