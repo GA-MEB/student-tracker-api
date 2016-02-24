@@ -51,12 +51,12 @@ RSpec.describe Cohort, type: :model do
   it "is invalid with a non-unique cohort number" do
     Cohort.create(
       cohort_number: 3000,
-      start_date: '2014-04-27',
+      start_date: '2014-04-28',
       end_date: '2014-07-30'
     )
     duplicate_cohort_number = Cohort.new(
       cohort_number: 3000,
-      start_date: '2014-04-27',
+      start_date: '2014-04-28',
       end_date: '2014-07-30'
     )
     duplicate_cohort_number.valid?
