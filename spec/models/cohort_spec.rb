@@ -76,11 +76,11 @@ RSpec.describe Cohort, type: :model do
       "must be a date"
     )
   end
-  xit "is invalid with a start date before 2012" do
+  it "is invalid with a start date before 2012" do
     too_early_start = Cohort.new(start_date: '2010-01-01')
     too_early_start.valid?
     expect(too_early_start.errors[:start_date]).to include(
-      "must not be before 2012"
+      "must not start before 2012"
     )
   end
   xit "is invalid with a weekend start date" do

@@ -8,10 +8,17 @@ class Cohort < ActiveRecord::Base
   }
   validates_presence_of :start_date, :end_date
   validate :start_date_and_end_date_are_dates
+  validate :start_date_in_2012_or_later
 
   private
   def start_date_and_end_date_are_dates
     errors.add(:start_date, "must be a date") unless start_date.is_a? Date
     errors.add(:end_date, "must be a date") unless end_date.is_a? Date
   end
+  def start_date_in_2012_or_later
+    if start_date && start_date < Date.parse('2012-01-01')
+      errors.add(:start_date, "must not start before 2012")
+    end
+  end
+
 end
