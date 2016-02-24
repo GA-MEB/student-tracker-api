@@ -9,6 +9,7 @@ class Cohort < ActiveRecord::Base
   validates_presence_of :start_date, :end_date
   validate :start_date_and_end_date_are_dates
   validate :start_date_in_2012_or_later
+  validate :start_and_end_on_weekdays
 
   private
   def start_date_and_end_date_are_dates
@@ -18,6 +19,14 @@ class Cohort < ActiveRecord::Base
   def start_date_in_2012_or_later
     if start_date && start_date < Date.parse('2012-01-01')
       errors.add(:start_date, "must not start before 2012")
+    end
+  end
+  def start_and_end_on_weekdays
+    if start_date && ([0,6].include? start_date.wday)
+      errors.add(:start_date, "must not start on a weekend")
+    end
+    if end_date && ([0,6].include? end_date.wday)
+      errors.add(:end_date, "must not end on a weekend")
     end
   end
 
