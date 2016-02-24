@@ -11,6 +11,7 @@ class Cohort < ActiveRecord::Base
   validate :start_date_in_2012_or_later
   validate :start_and_end_on_weekdays
   validate :end_date_after_start_date
+  validate :not_too_long
 
   private
   def start_date_and_end_date_are_dates
@@ -33,6 +34,11 @@ class Cohort < ActiveRecord::Base
   def end_date_after_start_date
     if start_date && end_date && (end_date - start_date < 1)
       errors.add(:end_date, "can't be on or before the start date")
+    end
+  end
+  def not_too_long
+    if start_date && end_date && (end_date - start_date > 120)
+      errors.add(:end_date, "can't be more than 120 days after the start date")
     end
   end
 
