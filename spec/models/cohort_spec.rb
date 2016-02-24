@@ -83,7 +83,7 @@ RSpec.describe Cohort, type: :model do
       "must not start before 2012"
     )
   end
-  xit "is invalid with a weekend start date" do
+  it "is invalid with a weekend start date or end date" do
     saturday_start = Cohort.new(start_date: '2016-01-30')
     saturday_start.valid?
     expect(saturday_start.errors[:start_date]).to include(
@@ -93,6 +93,16 @@ RSpec.describe Cohort, type: :model do
     sunday_start.valid?
     expect(sunday_start.errors[:start_date]).to include(
       "must not start on a weekend"
+    )
+    saturday_end = Cohort.new(end_date: '2016-01-30')
+    saturday_end.valid?
+    expect(saturday_end.errors[:end_date]).to include(
+      "must not end on a weekend"
+    )
+    sunday_end = Cohort.new(end_date: '2016-01-31')
+    sunday_end.valid?
+    expect(sunday_end.errors[:end_date]).to include(
+      "must not end on a weekend"
     )
   end
   xit "is invalid with an end date on or before the start date" do
