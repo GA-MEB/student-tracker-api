@@ -30,4 +30,6 @@ gem 'pg'
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'pry-byebug'
+  gem 'factory_girl_rails'
+  gem 'faker'
 end
