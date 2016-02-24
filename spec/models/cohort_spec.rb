@@ -123,10 +123,10 @@ RSpec.describe Cohort, type: :model do
       "can't be on or before the start date"
     )
   end
-  xit "is invalid with an end date more than 120 days after the start date" do
+  it "is invalid with an end date more than 120 days after the start date" do
     overlong_cohort = Cohort.new(
       start_date: '2016-01-01',
-      end_date: '2016-04-30'
+      end_date: '2016-05-01'
     )
     overlong_cohort.valid?
     expect(overlong_cohort.errors[:end_date]).to include(
