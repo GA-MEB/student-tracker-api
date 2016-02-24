@@ -54,11 +54,11 @@ RSpec.describe Student, type: :model do
       "must be greater than 0"
     )
   end
-  xit "is invalid with a student id number over 100 million" do
-    too_big_student_id_number = Student.new(student_id_number: 1000000000)
+  it "is invalid with a student id number over 100 million" do
+    too_big_student_id_number = Student.new(student_id_number: 100_000_001)
     too_big_student_id_number.valid?
-    expect(too_big_student_id_number[:student_id_number]).to include(
-      "can't be greater than 100 million"
+    expect(too_big_student_id_number.errors[:student_id_number]).to include(
+      "must be less than or equal to 100000000" #100,000,000
     )
   end
 end
