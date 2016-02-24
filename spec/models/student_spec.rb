@@ -46,12 +46,12 @@ RSpec.describe Student, type: :model do
     zero_student_id_number = Student.new(student_id_number: 0)
     zero_student_id_number.valid?
     expect(zero_student_id_number.errors[:student_id_number]).to include(
-      "must be an integer greater than zero"
+      "must be greater than 0"
     )
     negative_student_id_number = Student.new(student_id_number: -100)
     negative_student_id_number.valid?
     expect(negative_student_id_number.errors[:student_id_number]).to include(
-      "must be an integer greater than zero"
+      "must be greater than 0"
     )
   end
   xit "is invalid with a student id number over 100 million" do

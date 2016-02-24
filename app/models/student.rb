@@ -4,8 +4,7 @@ class Student < ActiveRecord::Base
     uniqueness: {message: "must be unique"},
     numericality: {
       only_integer: true,
-      greater_than: 0,
-      message: "must be an integer greater than zero"
+      greater_than: 0
     }
 
 end
