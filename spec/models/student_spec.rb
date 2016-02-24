@@ -56,12 +56,4 @@ RSpec.describe Student, type: :model do
       "can't be greater than 100 million"
     )
   end
-  xit "is invalid with a non-unique student id number" do
-    Student.create(student_id_number: 150)
-    duplicate_student_id_number = Student.new(student_id_number: 150)
-    duplicate_student_id_number.valid?
-    expect(duplicate_student_id_number[:student_id_number]).to include(
-      "must be unique"
-    )
-  end
 end
