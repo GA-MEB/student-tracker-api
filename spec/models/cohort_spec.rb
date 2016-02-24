@@ -105,7 +105,7 @@ RSpec.describe Cohort, type: :model do
       "must not end on a weekend"
     )
   end
-  xit "is invalid with an end date on or before the start date" do
+  it "is invalid with an end date on or before the start date" do
     same_start_end_dates = Cohort.new(
       start_date: '2015-01-01',
       end_date: '2015-01-01'
