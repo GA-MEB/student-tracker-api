@@ -42,11 +42,16 @@ RSpec.describe Student, type: :model do
       "must be unique"
     )
   end
-  xit "is invalid with a negative student id number" do
+  it "is invalid with a zero or negative student id number" do
+    zero_student_id_number = Student.new(student_id_number: 0)
+    zero_student_id_number.valid?
+    expect(zero_student_id_number.errors[:student_id_number]).to include(
+      "must be an integer greater than zero"
+    )
     negative_student_id_number = Student.new(student_id_number: -100)
     negative_student_id_number.valid?
-    expect(negative_student_id_number[:student_id_number]).to include(
-      "can't be negative"
+    expect(negative_student_id_number.errors[:student_id_number]).to include(
+      "must be an integer greater than zero"
     )
   end
   xit "is invalid with a student id number over 100 million" do
