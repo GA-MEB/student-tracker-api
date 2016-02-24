@@ -6,5 +6,7 @@ class CreateCohorts < ActiveRecord::Migration
       t.date :end_date, null: false
       t.timestamps null: false
     end
+
+    add_index :cohorts, :cohort_number, unique: true
   end
 end
