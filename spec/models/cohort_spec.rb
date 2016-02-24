@@ -49,7 +49,7 @@ RSpec.describe Cohort, type: :model do
     )
   end
   it "is invalid with a non-unique cohort number" do
-    Cohort.create(
+    original_cohort = Cohort.create(
       cohort_number: 3000,
       start_date: '2014-04-28',
       end_date: '2014-07-30'
@@ -63,6 +63,7 @@ RSpec.describe Cohort, type: :model do
     expect(duplicate_cohort_number.errors[:cohort_number]).to include(
       "must be unique"
     )
+    original_cohort.destroy
   end
   it "is invalid with an invalid start date or end date" do
     invalid_start_date = Cohort.new(start_date: "banana")
