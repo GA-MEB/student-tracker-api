@@ -1,34 +1,42 @@
 require 'rails_helper'
 
 RSpec.describe CohortsController, type: :controller do
+  def cohort_params
+    {
+      cohort_number: 10,
+      start_date: '2016-01-19',
+      end_date: '2016-04-08'
+    }
+  end
+  def cohort
+    Cohort.first
+  end
+
+  before(:all) { Cohort.create!(cohort_params) }
+  after(:all) { Cohort.delete_all }
+
   describe "GET #index" do
-    # it "assigns an array of cohorts to @cohorts"
-    # it "renders @cohorts as a JSON response"
+    before(:each) { get :index }
+    it "is successful" do
+      expect(response.status).to eq(200)
+    end
+    it "renders a JSON response" do
+      expect(JSON.parse(response.body)).not_to be(nil)
+    end
   end
   describe "GET #show" do
-    # it "assigns the requested cohort to @cohort"
-    # it "renders @cohort as a JSON response"
+    # it "is successful"
+    # it "renders a JSON response"
   end
   describe "POST #create" do
-    context "with valid attributes" do
-      # it "creates a new cohort in the database"
-      # it "renders a JSON response"
-    end
-    context "with invalid attributes" do
-      # it "is not successful"
-    end
+    # it "is successful"
+    # it "renders a JSON response"
   end
-  describe "PATCH/PUT #update" do
-    context "with valid attributes" do
-      # it "updates the requested cohort"
-      # it "assigns the requested cohort to @cohort"
-      # it "renders @cohort as a JSON response"
-    end
-    context "with invalid attributes" do
-      # it "is not successful"
-    end
+  describe "PATCH #update" do
+    # it "is successful"
+    # it "renders a JSON response"
   end
   describe "DELETE #destroy" do
-    # it "destroys the requested cohort"
+    # it "is successful and returns an empty response"
   end
 end
