@@ -37,8 +37,15 @@ RSpec.describe CohortsController, type: :controller do
     end
   end
   describe "POST #create" do
-    # it "is successful"
-    # it "renders a JSON response"
+    before(:each) do
+      get :create, cohort: cohort_params, format: :json
+    end
+    it "is successful" do
+      expect(response.status).to eq(201)
+    end
+    it "renders a JSON response" do
+      expect(JSON.parse(response.body)).not_to be(nil)
+    end
   end
   describe "PATCH #update" do
     # it "is successful"
