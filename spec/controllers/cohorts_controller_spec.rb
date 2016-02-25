@@ -38,6 +38,7 @@ RSpec.describe CohortsController, type: :controller do
   end
   describe "POST #create" do
     before(:each) do
+      Cohort.delete_all
       get :create, cohort: cohort_params, format: :json
     end
     it "is successful" do

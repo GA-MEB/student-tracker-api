@@ -47,10 +47,13 @@ RSpec.describe "Cohorts", type: :request do
   describe "POST /cohorts" do
     context "with valid attributes" do
       it "creates a new cohort" do
-        modified_cohort_params = cohort_params
-        modified_cohort_params['cohort_number'] = 11
-
-        post '/cohorts', { cohort: modified_cohort_params }
+        post '/cohorts', {
+          cohort: {
+            cohort_number: 11,
+            start_date: cohort_params[:start_date],
+            end_date: cohort_params[:end_date]
+          }
+        }
         expect(response).to have_http_status(:created)
 
         cohort_response = JSON.parse(response.body)
@@ -68,6 +71,37 @@ RSpec.describe "Cohorts", type: :request do
     end
     context "with invalid attributes" do
       it 'is not successful' do
+        post '/cohorts', {
+          cohort: {
+            cohort_number: 0,
+            start_date: cohort_params[:start_date],
+            end_date: cohort_params[:end_date]
+          }
+        }
+        expect(response).not_to be_success
+        post '/cohorts', {
+          cohort: {
+            cohort_number: -1,
+            start_date: cohort_params[:start_date],
+            end_date: cohort_params[:end_date]
+          }
+        }
+        expect(response).not_to be_success
+        post '/cohorts', {
+          cohort: {
+            cohort_number: cohort_params[:cohort_number],
+            start_date: '2016-01-18', # Sunday
+            end_date: cohort_params[:end_date]
+          }
+        }
+        expect(response).not_to be_success
+        post '/cohorts', {
+          cohort: {
+            cohort_number: cohort_params[:cohort_number],
+            start_date: cohort_params[:start_date],
+            end_date: '2016-04-09'
+          }
+        }
         expect(response).not_to be_success
       end
     end
