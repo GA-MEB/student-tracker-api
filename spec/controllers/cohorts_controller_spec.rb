@@ -7,8 +7,11 @@ def cohort_params
     end_date: '2016-04-08'
   }
 end
+def cohorts
+  Cohort.all
+end
 def cohort
-  Cohort.first
+  Cohort.last
 end
 
 RSpec.describe CohortsController, type: :controller do
