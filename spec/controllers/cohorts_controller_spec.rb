@@ -39,7 +39,7 @@ RSpec.describe CohortsController, type: :controller do
   describe "POST #create" do
     before(:each) do
       Cohort.delete_all
-      get :create, cohort: cohort_params, format: :json
+      post :create, cohort: cohort_params, format: :json
     end
     it "is successful" do
       expect(response.status).to eq(201)
@@ -49,8 +49,21 @@ RSpec.describe CohortsController, type: :controller do
     end
   end
   describe "PATCH #update" do
-    # it "is successful"
-    # it "renders a JSON response"
+    def cohort_diff
+      {
+        start_date: '2016-01-26'
+      }
+    end
+
+    before(:each) do
+      patch :update, id: cohort.id, cohort: cohort_diff, format: :json
+    end
+    it "is successful" do
+      expect(response.status).to eq(200)
+    end
+    it "renders a JSON response" do
+      expect(JSON.parse(response.body)).not_to be(nil)
+    end
   end
   describe "DELETE #destroy" do
     # it "is successful and returns an empty response"

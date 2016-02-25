@@ -24,7 +24,8 @@ RSpec.describe "Cohorts", type: :request do
       expect(response).to be_success
 
       cohorts_response = JSON.parse(response.body)
-      expect(cohorts_response['cohorts'].length).to eq(cohorts.count)
+      expect(cohorts_response['cohorts'].length
+        ).to eq(cohorts.count)
     end
   end
   describe "GET /cohorts/:id" do
@@ -32,16 +33,14 @@ RSpec.describe "Cohorts", type: :request do
       get "/cohorts/#{cohort.id}"
       expect(response).to be_success
       cohort_response = JSON.parse(response.body)
-      expect(cohort_response['cohort']['id']).to eq(cohort.id)
-      expect(cohort_response['cohort']['cohort_number']).to eq(
-        cohort.cohort_number
-      )
-      expect(Date.parse(cohort_response['cohort']['start_date'])).to eq(
-        cohort.start_date
-      )
-      expect(Date.parse(cohort_response['cohort']['end_date'])).to eq(
-        cohort.end_date
-      )
+      expect(cohort_response['cohort']['id']
+        ).to eq(cohort.id)
+      expect(cohort_response['cohort']['cohort_number']
+        ).to eq(cohort.cohort_number)
+      expect(Date.parse(cohort_response['cohort']['start_date'])
+        ).to eq(cohort.start_date)
+      expect(Date.parse(cohort_response['cohort']['end_date'])
+        ).to eq(cohort.end_date)
     end
   end
   describe "POST /cohorts" do
@@ -54,19 +53,18 @@ RSpec.describe "Cohorts", type: :request do
             end_date: cohort_params[:end_date]
           }
         }
+        expect(response).to be_success
         expect(response).to have_http_status(:created)
 
         cohort_response = JSON.parse(response.body)
-        expect(cohort_response['cohort']['id']).not_to be_nil
-        expect(cohort_response['cohort']['cohort_number']).to eq(
-          cohort.cohort_number
-        )
-        expect(Date.parse(cohort_response['cohort']['start_date'])).to eq(
-          cohort.start_date
-        )
-        expect(Date.parse(cohort_response['cohort']['end_date'])).to eq(
-          cohort.end_date
-        )
+        expect(cohort_response['cohort']['id']
+          ).not_to be_nil
+        expect(cohort_response['cohort']['cohort_number']
+          ).to eq(cohort.cohort_number)
+        expect(Date.parse(cohort_response['cohort']['start_date'])
+          ).to eq(cohort.start_date)
+        expect(Date.parse(cohort_response['cohort']['end_date'])
+          ).to eq(cohort.end_date)
       end
     end
     context "with invalid attributes" do
@@ -99,22 +97,60 @@ RSpec.describe "Cohorts", type: :request do
           cohort: {
             cohort_number: cohort_params[:cohort_number],
             start_date: cohort_params[:start_date],
-            end_date: '2016-04-09'
+            end_date: '2016-04-09' # Saturday
           }
         }
         expect(response).not_to be_success
       end
     end
   end
-  xdescribe "PATCH /cohorts/:id" do
+  describe "PATCH /cohorts/:id" do
     context "with valid attributes" do
       it 'updates one cohort' do
-        patch "/cohorts/#{cohort.id}"
+        new_values = {
+          cohort: {
+            cohort_number: 110,
+            start_date: '2016-01-26',
+            end_date: '2016-04-15'
+          }
+        }
+        patch "/cohorts/#{cohort.id}", new_values
         expect(response).to be_success
+
+        cohort_response = JSON.parse(response.body)
+        expect(cohort_response['cohort']['cohort_number']).to
+          eq(new_values.cohort_number)
+        expect(Date.parse(cohort_response['cohort']['start_date'])).to
+          eq(new_values.start_date)
+        expect(Date.parse(cohort_response['cohort']['end_date'])).to
+          eq(new_values.end_date)
       end
     end
     context "with invalid attributes" do
       it "is unsuccessful" do
+        patch "/cohorts/#{cohort.id}", {
+          cohort: {
+            cohort_number: 0
+          }
+        }
+        expect(response).not_to be_success
+        patch "/cohorts/#{cohort.id}", {
+          cohort: {
+            cohort_number: -1
+          }
+        }
+        expect(response).not_to be_success
+        patch "/cohorts/#{cohort.id}", {
+          cohort: {
+            start_date: '2016-01-18', # Sunday
+          }
+        }
+        expect(response).not_to be_success
+        patch "/cohorts/#{cohort.id}", {
+          cohort: {
+            end_date: '2016-04-09' # Saturday
+          }
+        }
         expect(response).not_to be_success
       end
     end
