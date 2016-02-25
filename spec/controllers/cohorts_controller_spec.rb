@@ -1,17 +1,17 @@
 require 'rails_helper'
 
-RSpec.describe CohortsController, type: :controller do
-  def cohort_params
-    {
-      cohort_number: 10,
-      start_date: '2016-01-19',
-      end_date: '2016-04-08'
-    }
-  end
-  def cohort
-    Cohort.first
-  end
+def cohort_params
+  {
+    cohort_number: 10,
+    start_date: '2016-01-19',
+    end_date: '2016-04-08'
+  }
+end
+def cohort
+  Cohort.first
+end
 
+RSpec.describe CohortsController, type: :controller do
   before(:all) { Cohort.create!(cohort_params) }
   after(:all) { Cohort.delete_all }
 
@@ -25,8 +25,13 @@ RSpec.describe CohortsController, type: :controller do
     end
   end
   describe "GET #show" do
-    # it "is successful"
-    # it "renders a JSON response"
+    before(:each) { get :show, id: cohort.id }
+    it "is successful" do
+      expect(response.status).to eq(200)
+    end
+    it "renders a JSON response" do
+      expect(JSON.parse(response.body)).not_to be(nil)
+    end
   end
   describe "POST #create" do
     # it "is successful"

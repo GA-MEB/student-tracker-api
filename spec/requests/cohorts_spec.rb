@@ -9,16 +9,19 @@ def cohort
 end
 
 RSpec.describe "Cohorts", type: :request do
+  before(:all) { Cohort.create!(cohort_params) }
+  after(:all) { Cohort.delete_all }
+
   describe "GET /cohorts" do
     it "gets all cohorts" do
       get '/cohorts'
       expect(response).to be_success
 
       cohorts_response = JSON.parse(response.body)
-      expect(cohorts_response.length).to eq(cohorts.count)
+      expect(cohorts_response['cohorts'].length).to eq(cohorts.count)
     end
   end
-  xdescribe "GET /cohorts/:id" do
+  describe "GET /cohorts/:id" do
     it 'shows one cohort' do
       get "/cohorts/#{cohort.id}"
       expect(response).to be_success
@@ -27,10 +30,10 @@ RSpec.describe "Cohorts", type: :request do
       expect(cohort_response['cohort']['cohort_number']).to eq(
         cohort.cohort_number
       )
-      expect(cohort_response['cohort']['start_date']).to eq(
+      expect(Date.parse(cohort_response['cohort']['start_date'])).to eq(
         cohort.start_date
       )
-      expect(cohort_response['cohort']['end_date']).to eq(
+      expect(Date.parse(cohort_response['cohort']['end_date'])).to eq(
         cohort.end_date
       )
     end
