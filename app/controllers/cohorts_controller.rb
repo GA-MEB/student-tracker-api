@@ -5,4 +5,17 @@ class CohortsController < ApplicationController
   def show
     render json: Cohort.find(params[:id]), root: 'cohort'
   end
+  def create
+    @cohort = Cohort.create(cohort_params)
+    if @cohort.save
+      render json: @cohort, status: :created, root: 'cohort'
+    else
+      render json: @cohort.errors, status: :unprocessable_entity
+    end
+  end
+
+  private
+  def cohort_params
+    params.require(:cohort).permit([:cohort_number, :start_date, :end_date])
+  end
 end
