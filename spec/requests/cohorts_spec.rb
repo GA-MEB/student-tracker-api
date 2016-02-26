@@ -88,7 +88,7 @@ RSpec.describe "Cohorts", type: :request do
         post '/cohorts', {
           cohort: {
             cohort_number: cohort_params[:cohort_number],
-            start_date: '2016-01-18', # Sunday
+            start_date: '2016-01-17', # Sunday
             end_date: cohort_params[:end_date]
           }
         }
@@ -118,12 +118,12 @@ RSpec.describe "Cohorts", type: :request do
         expect(response).to be_success
 
         cohort_response = JSON.parse(response.body)
-        expect(cohort_response['cohort']['cohort_number']).to
-          eq(new_values.cohort_number)
-        expect(Date.parse(cohort_response['cohort']['start_date'])).to
-          eq(new_values.start_date)
-        expect(Date.parse(cohort_response['cohort']['end_date'])).to
-          eq(new_values.end_date)
+        expect(cohort_response['cohort']['cohort_number']
+          ).to eq(new_values[:cohort][:cohort_number])
+        expect(Date.parse(cohort_response['cohort']['start_date'])
+          ).to eq(Date.parse(new_values[:cohort][:start_date]))
+        expect(Date.parse(cohort_response['cohort']['end_date'])
+          ).to eq(Date.parse(new_values[:cohort][:end_date]))
       end
     end
     context "with invalid attributes" do
@@ -142,7 +142,7 @@ RSpec.describe "Cohorts", type: :request do
         expect(response).not_to be_success
         patch "/cohorts/#{cohort.id}", {
           cohort: {
-            start_date: '2016-01-18', # Sunday
+            start_date: '2016-01-17', # Sunday
           }
         }
         expect(response).not_to be_success

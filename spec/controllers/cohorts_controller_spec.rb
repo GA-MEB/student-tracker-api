@@ -59,7 +59,7 @@ RSpec.describe CohortsController, type: :controller do
       patch :update, id: cohort.id, cohort: cohort_diff, format: :json
     end
     it "is successful" do
-      expect(response.status).to eq(200)
+      expect([200,201,204]).to include(response.status)
     end
     it "renders a JSON response" do
       expect(JSON.parse(response.body)).not_to be(nil)
