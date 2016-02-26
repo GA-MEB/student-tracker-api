@@ -11,7 +11,7 @@ def students
   Student.all
 end
 def student
-  Student.first
+  Student.last
 end
 
 RSpec.describe StudentsController, type: :controller do
@@ -29,6 +29,18 @@ RSpec.describe StudentsController, type: :controller do
   end
   describe "GET #show" do
     before(:each) { get :show, id: student.id }
+    it "is successful" do
+      expect(response).to be_successful
+    end
+    it "renders a JSON response" do
+      expect(JSON.parse(response.body)).not_to be(nil)
+    end
+  end
+  describe "POST #create" do
+    before(:each) do
+      Student.delete_all
+      post :create, student: student_params, format: :json
+    end
     it "is successful" do
       expect(response).to be_successful
     end

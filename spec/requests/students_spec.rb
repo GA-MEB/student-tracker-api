@@ -13,7 +13,7 @@ def students
 end
 
 def student
-  Student.first
+  Student.last
 end
 
 RSpec.describe "Students", type: :request do
@@ -45,11 +45,72 @@ RSpec.describe "Students", type: :request do
         ).to eq(student.surname)
     end
   end
-  xdescribe "POST /students" do
-    it "creates a new student" do
-      post '/students'
-      expect(response).to be_success
-      expect(response).to have_http_status(:created)
+  describe "POST /students" do
+    context "with valid attributes" do
+      it "creates a new student" do
+        post '/students', {
+          student: {
+            given_name: student_params[:given_name],
+            surname: student_params[:surname],
+            student_id_number: 11
+          }
+        }
+        expect(response).to be_success
+        expect(response).to have_http_status(:created)
+
+        student_response = JSON.parse(response.body)
+        expect(student_response['student']['id']
+          ).not_to be_nil
+        expect(student_response['student']['given_name']
+          ).to eq(student.given_name)
+        expect(student_response['student']['surname']
+          ).to eq(student.surname)
+        expect(student_response['student']['student_id_number']
+          ).to eq(student.student_id_number)
+      end
+    end
+    context "with invalid attributes" do
+      it "is not successful" do
+        post '/students', {
+          student: {
+            given_name: nil,
+            surname: nil,
+            student_id_number: nil
+          }
+        }
+        expect(response).to_not be_success
+        post '/students', {
+          student: {
+            given_name: student_params[:given_name],
+            surname: student_params[:surname],
+            student_id_number: -1
+          }
+        }
+        expect(response).to_not be_success
+        post '/students', {
+          student: {
+            given_name: student_params[:given_name],
+            surname: student_params[:surname],
+            student_id_number: 0
+          }
+        }
+        expect(response).to_not be_success
+        post '/students', {
+          student: {
+            given_name: student_params[:given_name],
+            surname: student_params[:surname],
+            student_id_number: 2000
+          }
+        }
+        post '/students', {
+          student: {
+            given_name: student_params[:given_name],
+            surname: student_params[:surname],
+            student_id_number: 2000
+          }
+        }
+        expect(response).to_not be_success
+      end
     end
   end
   xdescribe "PATCH /students/:id" do
