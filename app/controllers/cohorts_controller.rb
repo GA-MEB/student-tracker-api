@@ -21,6 +21,10 @@ class CohortsController < ApplicationController
       render json: @cohort.errors, status: :unprocessable_entity
     end
   end
+  def destroy
+    @cohort = Cohort.find(params[:id])
+    @cohort.destroy
+  end
 
   private
   def cohort_params
