@@ -1,5 +1,13 @@
 require 'rails_helper'
 
+def student_params
+  {
+    given_name: 'Bob',
+    surname: 'Marley',
+    student_id_number: 10
+  }
+end
+
 def students
   Student.all
 end
@@ -9,14 +17,17 @@ def student
 end
 
 RSpec.describe "Students", type: :request do
-  xdescribe "GET /students" do
+  before(:all) { Student.create!(student_params) }
+  after(:all) { Student.delete_all }
+
+  describe "GET /students" do
     it "gets all students" do
       get '/students'
       expect(response).to be_success
 
       students_response = JSON.parse(response.body)
-      expect(students_response.length).to eq(students.count)
-      expect(response).to have_http_status(200)
+      expect(students_response['students'].length
+        ).to eq(students.count)
     end
   end
   xdescribe "GET /students/:id" do
