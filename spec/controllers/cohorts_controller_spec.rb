@@ -21,7 +21,7 @@ RSpec.describe CohortsController, type: :controller do
   describe "GET #index" do
     before(:each) { get :index }
     it "is successful" do
-      expect(response.status).to eq(200)
+      expect(response).to be_successful
     end
     it "renders a JSON response" do
       expect(JSON.parse(response.body)).not_to be(nil)
@@ -30,7 +30,7 @@ RSpec.describe CohortsController, type: :controller do
   describe "GET #show" do
     before(:each) { get :show, id: cohort.id }
     it "is successful" do
-      expect(response.status).to eq(200)
+      expect(response).to be_successful
     end
     it "renders a JSON response" do
       expect(JSON.parse(response.body)).not_to be(nil)
@@ -42,7 +42,7 @@ RSpec.describe CohortsController, type: :controller do
       post :create, cohort: cohort_params, format: :json
     end
     it "is successful" do
-      expect(response.status).to eq(201)
+      expect(response).to be_successful
     end
     it "renders a JSON response" do
       expect(JSON.parse(response.body)).not_to be(nil)
@@ -59,13 +59,17 @@ RSpec.describe CohortsController, type: :controller do
       patch :update, id: cohort.id, cohort: cohort_diff, format: :json
     end
     it "is successful" do
-      expect([200,201,204]).to include(response.status)
+      expect(response).to be_successful
     end
     it "renders a JSON response" do
       expect(JSON.parse(response.body)).not_to be(nil)
     end
   end
   describe "DELETE #destroy" do
-    # it "is successful and returns an empty response"
+    it "is successful and returns an empty response" do
+      delete :destroy, id: cohort.id
+      expect(response).to be_successful
+      expect(response.body).to be_empty
+    end
   end
 end

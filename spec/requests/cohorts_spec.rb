@@ -155,11 +155,14 @@ RSpec.describe "Cohorts", type: :request do
       end
     end
   end
-  xdescribe "DELETE /cohorts/:id" do
+  describe "DELETE /cohorts/:id" do
     it 'destroys one cohort' do
+      old_count = cohorts.length
+
       delete "/cohorts/#{cohort.id}"
       expect(response).to be_success
       expect(response.body).to be_empty
+      expect(cohorts.length - old_count).to eq(-1)
     end
   end
 end
