@@ -13,6 +13,14 @@ class CohortsController < ApplicationController
       render json: @cohort.errors, status: :unprocessable_entity
     end
   end
+  def update
+    @cohort = Cohort.find(params[:id])
+    if @cohort.update(cohort_params)
+      render json: @cohort, root: 'cohort'
+    else
+      render json: @cohort.errors, status: :unprocessable_entity
+    end
+  end
 
   private
   def cohort_params
