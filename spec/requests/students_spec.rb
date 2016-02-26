@@ -30,21 +30,19 @@ RSpec.describe "Students", type: :request do
         ).to eq(students.count)
     end
   end
-  xdescribe "GET /students/:id" do
+  describe "GET /students/:id" do
     it 'shows one student' do
       get "/students/#{student.id}"
       expect(response).to be_success
       student_response = JSON.parse(response.body)
-      expect(student_response['student']['id']).to eq(student.id)
-      expect(student_response['student']['student_id_number']).to eq(
-        student.student_number
-      )
-      expect(student_response['student']['given_name']).to eq(
-        student.given_name
-      )
-      expect(student_response['student']['surname']).to eq(
-        student.surname
-      )
+      expect(student_response['student']['id']
+        ).to eq(student.id)
+      expect(student_response['student']['student_id_number']
+        ).to eq(student.student_id_number)
+      expect(student_response['student']['given_name']
+        ).to eq(student.given_name)
+      expect(student_response['student']['surname']
+        ).to eq(student.surname)
     end
   end
   xdescribe "POST /students" do
