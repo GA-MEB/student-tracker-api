@@ -108,22 +108,20 @@ RSpec.describe "Cohorts", type: :request do
     context "with valid attributes" do
       it 'updates one cohort' do
         new_values = {
-          cohort: {
-            cohort_number: 110,
-            start_date: '2016-01-26',
-            end_date: '2016-04-15'
-          }
+          cohort_number: 110,
+          start_date: '2016-01-26',
+          end_date: '2016-04-15'
         }
-        patch "/cohorts/#{cohort.id}", new_values
+        patch "/cohorts/#{cohort.id}", { cohort: new_values }
         expect(response).to be_success
 
         cohort_response = JSON.parse(response.body)
         expect(cohort_response['cohort']['cohort_number']
-          ).to eq(new_values[:cohort][:cohort_number])
+          ).to eq(new_values[:cohort_number])
         expect(Date.parse(cohort_response['cohort']['start_date'])
-          ).to eq(Date.parse(new_values[:cohort][:start_date]))
+          ).to eq(Date.parse(new_values[:start_date]))
         expect(Date.parse(cohort_response['cohort']['end_date'])
-          ).to eq(Date.parse(new_values[:cohort][:end_date]))
+          ).to eq(Date.parse(new_values[:end_date]))
       end
     end
     context "with invalid attributes" do
