@@ -21,6 +21,11 @@ class StudentsController < ApplicationController
       render json: @student.errors, status: :unprocessable_entity
     end
   end
+  def destroy
+    @student = Student.find(params[:id])
+    @student.destroy
+    head :no_content
+  end
 
 
   private
