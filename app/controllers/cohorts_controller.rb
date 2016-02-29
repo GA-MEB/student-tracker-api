@@ -24,6 +24,7 @@ class CohortsController < ApplicationController
   def destroy
     @cohort = Cohort.find(params[:id])
     @cohort.destroy
+    head :no_content
   end
 
   private
