@@ -113,10 +113,65 @@ RSpec.describe "Students", type: :request do
       end
     end
   end
-  xdescribe "PATCH /students/:id" do
-    it 'updates one student' do
-      patch "/students/#{student.id}"
-      expect(response).to be_success
+  describe "PATCH /students/:id" do
+    context "with valid attributes" do
+      it 'updates one student' do
+        new_values = {
+          given_name: 'Eric',
+          surname: 'Clapton',
+          student_id_number: 200
+        }
+        patch "/students/#{student.id}", { student: new_values }
+        expect(response).to be_success
+
+        student_response = JSON.parse(response.body)
+        expect(student_response['student']['given_name']
+          ).to eq(new_values[:given_name])
+        expect(student_response['student']['surname']
+          ).to eq(new_values[:surname])
+        expect(student_response['student']['student_id_number']
+          ).to eq(new_values[:student_id_number])
+      end
+    end
+    context "with invalid attributes" do
+      it "is unsuccessful" do
+        patch "/students/#{student.id}", {
+          student: {
+            given_name: nil
+          }
+        }
+        expect(response).to_not be_success
+        patch "/students/#{student.id}", {
+          student: {
+            surname: nil
+          }
+        }
+        expect(response).to_not be_success
+        patch "/students/#{student.id}", {
+          student: {
+            student_id_number: nil
+          }
+        }
+        expect(response).to_not be_success
+        patch "/students/#{student.id}", {
+          student: {
+            student_id_number: 0
+          }
+        }
+        expect(response).to_not be_success
+        patch "/students/#{student.id}", {
+          student: {
+            student_id_number: -1
+          }
+        }
+        expect(response).to_not be_success
+        patch "/students/#{student.id}", {
+          student: {
+            student_id_number: 100_000_001
+          }
+        }
+        expect(response).to_not be_success
+      end
     end
   end
   xdescribe "PUT /students/:id" do

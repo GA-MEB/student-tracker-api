@@ -48,4 +48,21 @@ RSpec.describe StudentsController, type: :controller do
       expect(JSON.parse(response.body)).not_to be(nil)
     end
   end
+  describe "PATCH #update" do
+    def student_diff
+      {
+        given_name: 'Williard'
+      }
+    end
+
+    before(:each) do
+      patch :update, id: student.id, student: student_diff, format: :json
+    end
+    it "is successful" do
+      expect(response).to be_successful
+    end
+    it "renders a JSON response" do
+      expect(JSON.parse(response.body)).not_to be(nil)
+    end
+  end
 end
