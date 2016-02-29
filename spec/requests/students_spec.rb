@@ -174,10 +174,14 @@ RSpec.describe "Students", type: :request do
       end
     end
   end
-  xdescribe "DELETE /students/:id" do
+  describe "DELETE /students/:id" do
     it 'destroys one student' do
+      old_count = students.length
+
       delete "/students/#{student.id}"
       expect(response).to be_success
+      expect(response.body).to be_empty
+      expect(students.length - old_count).to eq(-1)
     end
   end
 end

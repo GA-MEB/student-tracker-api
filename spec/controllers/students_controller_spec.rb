@@ -65,4 +65,11 @@ RSpec.describe StudentsController, type: :controller do
       expect(JSON.parse(response.body)).not_to be(nil)
     end
   end
+  describe "DELETE #destroy" do
+    it "is successful and returns an empty response" do
+      delete :destroy, id: student.id
+      expect(response).to be_successful
+      expect(response.body).to be_empty
+    end
+  end
 end
