@@ -174,12 +174,6 @@ RSpec.describe "Students", type: :request do
       end
     end
   end
-  xdescribe "PUT /students/:id" do
-    it 'updates one student' do
-      put "/students/#{student.id}"
-      expect(response).to be_success
-    end
-  end
   xdescribe "DELETE /students/:id" do
     it 'destroys one student' do
       delete "/students/#{student.id}"
