@@ -13,6 +13,15 @@ class StudentsController < ApplicationController
       render json: @student.errors, status: :unprocessable_entity
     end
   end
+  def update
+    @student = Student.find(params[:id])
+    if @student.update(student_params)
+      render json: @student, root: 'student'
+    else
+      render json: @student.errors, status: :unprocessable_entity
+    end
+  end
+
 
   private
   def student_params
