@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Student, type: :model do
-  describe 'validation' do
+  describe 'validation: Student' do
     it "is valid with a given name, surname, and student id number" do
       student = Student.new(
         given_name: 'Charles',
@@ -63,6 +63,15 @@ RSpec.describe Student, type: :model do
       )
     end
   end
-  describe 'associations' do
+  describe 'associations: Student' do
+    def cohort_association
+      Student.reflect_on_association(:cohort)
+    end
+
+    it 'is associated with a Cohort' do
+      expect(cohort_association).not_to be_nil
+      expect(cohort_association.macro).to be(:belongs_to)
+      expect(cohort_association.options[:inverse_of]).not_to be_nil
+    end
   end
 end
