@@ -14,9 +14,26 @@ def student
   Student.last
 end
 
+def cohort_params
+  {
+    cohort_number: 10,
+    start_date: '2016-01-19',
+    end_date: '2016-04-08'
+  }
+end
+def cohort
+  Cohort.last
+end
+
 RSpec.describe StudentsController, type: :controller do
-  before(:all) { Student.create!(student_params) }
-  after(:all) { Student.delete_all }
+  before(:all) do
+    Student.create!(student_params)
+    Cohort.create!(cohort_params)
+  end
+  after(:all) do
+    Student.delete_all
+    Cohort.delete_all
+  end
 
   describe "GET #index" do
     before(:each) { get :index }
@@ -37,15 +54,29 @@ RSpec.describe StudentsController, type: :controller do
     end
   end
   describe "POST #create" do
-    before(:each) do
-      Student.delete_all
-      post :create, student: student_params, format: :json
+    context "when a cohort is not specified" do
+      before(:each) do
+        Student.delete_all
+        post :create, student: student_params, format: :json
+      end
+      it "is successful" do
+        expect(response).to be_successful
+      end
+      it "renders a JSON response" do
+        expect(JSON.parse(response.body)).not_to be(nil)
+      end
     end
-    it "is successful" do
-      expect(response).to be_successful
-    end
-    it "renders a JSON response" do
-      expect(JSON.parse(response.body)).not_to be(nil)
+    context "when a cohort is specified" do
+      before(:each) do
+        Student.delete_all
+        post :create, { student: student_params, cohort_id: cohort.id }, format: :json
+      end
+      it "is successful" do
+        expect(response).to be_successful
+      end
+      it "renders a JSON response" do
+        expect(JSON.parse(response.body)).not_to be(nil)
+      end
     end
   end
   describe "PATCH #update" do
