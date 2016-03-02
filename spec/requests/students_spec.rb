@@ -295,5 +295,24 @@ RSpec.describe "Students", type: :request do
       end
     end
   end
+  describe 'GET /cohorts:cohort_id/students' do
+    context 'with a valid cohort id' do
+      it 'gets all students in the specified cohort' do
+        get "/cohorts/#{cohort.id}/students"
+        expect(response).to be_success
+
+        students_response = JSON.parse(response.body)
+        expect(students_response['students'].length
+          ).to eq(cohort.students.count)
+      end
+    end
+    context 'with an invalid cohort id' do
+      it 'is not successful' do
+        invalid_cohort_id = 0
+        get "/cohorts/#{invalid_cohort_id}/students"
+        expect(response).to_not be_success
+      end
+    end
+  end
 
 end
