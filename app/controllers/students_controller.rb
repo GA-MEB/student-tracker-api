@@ -6,7 +6,12 @@ class StudentsController < ApplicationController
     render json: Student.find(params[:id]), root: 'student'
   end
   def create
-    @student = Student.create(student_params)
+    if params[:cohort_id] && Cohort.find_by(id: params[:cohort_id])
+      @student = Cohort.find(params[:cohort_id]).students.create(student_params)
+    else
+      @student = Student.create(student_params)
+    end
+
     if @student.save
       render json: @student, status: :created, root: 'student'
     else
