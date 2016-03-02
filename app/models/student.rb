@@ -8,4 +8,5 @@ class Student < ActiveRecord::Base
       less_than_or_equal_to: 100_000_000
     }
 
+  belongs_to :cohort, inverse_of: :students
 end

@@ -13,6 +13,8 @@ class Cohort < ActiveRecord::Base
            :end_date_after_start_date,
            :not_too_long
 
+  has_many :students, inverse_of: :cohort
+
   private
   def start_date_and_end_date_are_dates
     errors.add(:start_date, "must be a date") unless start_date.is_a? Date
