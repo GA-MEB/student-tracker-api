@@ -288,7 +288,7 @@ RSpec.describe "Students", type: :request do
           student: {
             given_name: student_params[:given_name],
             surname: student_params[:surname],
-            student_id_number: 2000
+            student_id_number: 200_000_000
           }
         }
         expect(response).to_not be_success
