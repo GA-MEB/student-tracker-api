@@ -1,6 +1,12 @@
 class StudentsController < ApplicationController
   def index
-    render json: Student.all, root: 'students'
+    if !params[:cohort_id]
+      render json: Student.all, root: 'students'
+    elsif Cohort.find_by(id: params[:cohort_id])
+      render json: Cohort.find_by(id: params[:cohort_id]).students, root: 'students'
+    else
+      render json: {error: 'invalid cohort id'}, status: 404
+    end
   end
   def show
     render json: Student.find(params[:id]), root: 'student'

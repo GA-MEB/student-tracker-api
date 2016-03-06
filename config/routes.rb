@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   resources :cohorts, only: [:index, :show, :create, :update, :destroy] do
-    resources :students, only: [:create]
+    resources :students, only: [:index, :create]
   end
   resources :students, only: [:index, :show, :create, :update, :destroy]
 
