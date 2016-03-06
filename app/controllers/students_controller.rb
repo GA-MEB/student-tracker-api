@@ -7,7 +7,7 @@ class StudentsController < ApplicationController
   end
   def create
     if params[:cohort_id] && Cohort.find_by(id: params[:cohort_id])
-      @student = Cohort.find(params[:cohort_id]).students.create(student_params)
+      @student = Cohort.find_by(id: params[:cohort_id]).students.create(student_params)
     else
       @student = Student.create(student_params)
     end
