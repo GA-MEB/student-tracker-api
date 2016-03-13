@@ -49,4 +49,15 @@ RSpec.describe AttendancesController, type: :controller do
       expect(JSON.parse(response.body)).not_to be(nil)
     end
   end
+
+  describe "GET #show" do
+    before(:each) { get :show, student_id: student.id, id: attendance.id }
+    it "is successful" do
+      expect(response).to be_successful
+    end
+    it "renders a JSON response" do
+      expect(JSON.parse(response.body)).not_to be(nil)
+    end
+  end
+
 end

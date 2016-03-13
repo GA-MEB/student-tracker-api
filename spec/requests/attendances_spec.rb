@@ -65,5 +65,5 @@ RSpec.describe "Attendances", type: :request do
         ).to eq(attendance.status)
     end
   end
-  
+
 end
