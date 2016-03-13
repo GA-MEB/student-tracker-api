@@ -73,5 +73,15 @@ RSpec.describe Student, type: :model do
       expect(cohort_association.macro).to be(:belongs_to)
       expect(cohort_association.options[:inverse_of]).not_to be_nil
     end
+
+    def attendances_association
+      Student.reflect_on_association(:attendances)
+    end
+
+    it 'is associated with Attendances' do
+      expect(attendances_association).not_to be_nil
+      expect(attendances_association.macro).to be(:has_many)
+      expect(attendances_association.options[:inverse_of]).not_to be_nil
+    end
   end
 end
