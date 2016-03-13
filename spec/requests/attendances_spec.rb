@@ -41,22 +41,13 @@ RSpec.describe "Attendances", type: :request do
   end
 
   describe "GET /students/:student_id/attendances" do
-    context "with a valid student id" do
-      it "retrieves all attendances associated with a given student" do
-        get "/students/#{student.id}/attendances"
-        expect(response).to be_success
+    it "retrieves all attendances associated with a given student" do
+      get "/students/#{student.id}/attendances"
+      expect(response).to be_success
 
-        attendances_response = JSON.parse(response.body)
-        expect(attendances_response['attendances'].length
-          ).to eq(student.attendances.count)
-      end
-    end
-    context "with an invalid student id" do
-      it "is unsuccessful" do
-        invalid_student_id = 0
-        get "/students/#{invalid_student_id}/attendances"
-        expect(response).to_not be_success
-      end
+      attendances_response = JSON.parse(response.body)
+      expect(attendances_response['attendances'].length
+        ).to eq(student.attendances.count)
     end
   end
 end
