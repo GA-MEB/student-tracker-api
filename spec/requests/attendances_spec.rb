@@ -50,4 +50,20 @@ RSpec.describe "Attendances", type: :request do
         ).to eq(student.attendances.count)
     end
   end
+
+  describe "GET /students/:student_id/attendances/:id" do
+    it "retrieves the given attendance record" do
+      get "/students/#{student.id}/attendances/#{attendance.id}"
+      expect(response).to be_success
+
+      attendance_response = JSON.parse(response.body)
+      expect(attendance_response['attendance']['id']
+        ).to eq(attendance.id)
+      expect(Date.parse(attendance_response['attendance']['date'])
+        ).to eq(attendance.date)
+      expect(attendance_response['attendance']['status']
+        ).to eq(attendance.status)
+    end
+  end
+  
 end
