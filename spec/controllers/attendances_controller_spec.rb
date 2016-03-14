@@ -76,4 +76,26 @@ RSpec.describe AttendancesController, type: :controller do
     end
   end
 
+  describe "PATCH #update" do
+    def attendance_diff
+      {
+        status: 'left early'
+      }
+    end
+
+    before(:each) do
+      patch :update, {
+        attendance: attendance_diff,
+        student_id: student.id,
+        id: attendance.id
+      }, format: :json
+    end
+    it "is successful" do
+      expect(response).to be_successful
+    end
+    it "renders a JSON response" do
+      expect(JSON.parse(response.body)).not_to be(nil)
+    end
+  end
+
 end
