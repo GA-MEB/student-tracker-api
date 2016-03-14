@@ -87,4 +87,21 @@ RSpec.describe "Attendances", type: :request do
     end
   end
 
+  describe "PATCH /students/:student_id/attendances/:id" do
+    it 'updates one attendance record' do
+      new_values = {
+        date: attendance.date + 1,
+        status: 'tardy'
+      }
+      patch "/students/#{student.id}/attendances/#{attendance.id}", { attendance: new_values }
+      expect(response).to be_success
+
+      attendance_response = JSON.parse(response.body)
+      expect(Date.parse(attendance_response['attendance']['date'])
+        ).to eq(new_values[:date])
+      expect(attendance_response['attendance']['status']
+        ).to eq(new_values[:status])
+    end
+  end
+
 end
