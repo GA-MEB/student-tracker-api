@@ -9,7 +9,7 @@ class AttendancesController < ApplicationController
   end
 
   def create
-    @attendance = Attendance.create(attendance_params)
+    @attendance = attendances.create(attendance_params)
     if @attendance.save
       render json: @attendance, status: :created, root: 'attendance'
     else
