@@ -80,6 +80,8 @@ RSpec.describe "Attendances", type: :request do
       attendance_response = JSON.parse(response.body)
       expect(attendance_response['attendance']['id']
         ).not_to be_nil
+      expect(attendance_response['attendance']['student_id']
+        ).to eq(student.id)
       expect(Date.parse(attendance_response['attendance']['date'])
         ).to eq(attendance.date)
       expect(attendance_response['attendance']['status']
