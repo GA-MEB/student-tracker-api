@@ -66,4 +66,25 @@ RSpec.describe "Attendances", type: :request do
     end
   end
 
+  describe "POST /students/:student_id/attendances" do
+    it "creates a new attendance record for the given student" do
+      post "/students/#{student.id}/attendances", {
+        attendance: {
+          date: attendance.date + 1,
+          status: 'present'
+        }
+      }
+      expect(response).to be_success
+      expect(response).to have_http_status(:created)
+
+      attendance_response = JSON.parse(response.body)
+      expect(attendance_response['attendance']['id']
+        ).not_to be_nil
+      expect(Date.parse(attendance_response['attendance']['date'])
+        ).to eq(attendance.date + 1)
+      expect(attendance_response['attendance']['status']
+        ).to eq(attendance.status)
+    end
+  end
+
 end
