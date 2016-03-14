@@ -70,7 +70,7 @@ RSpec.describe "Attendances", type: :request do
     it "creates a new attendance record for the given student" do
       post "/students/#{student.id}/attendances", {
         attendance: {
-          date: attendance.date + 1,
+          date: (attendance.date + 1),
           status: 'present'
         }
       }
@@ -81,7 +81,7 @@ RSpec.describe "Attendances", type: :request do
       expect(attendance_response['attendance']['id']
         ).not_to be_nil
       expect(Date.parse(attendance_response['attendance']['date'])
-        ).to eq(attendance.date + 1)
+        ).to eq(attendance.date)
       expect(attendance_response['attendance']['status']
         ).to eq(attendance.status)
     end
