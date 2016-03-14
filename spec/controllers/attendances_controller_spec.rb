@@ -7,7 +7,7 @@ def attendances_params
     { date: Date.parse('2016-03-12'), status: 'present' },
     { date: Date.parse('2016-03-13'), status: 'tardy' },
     { date: Date.parse('2016-03-14'), status: 'tardy' },
-    { date: Date.parse('2016-03-15'), status: 'left early' },
+    { date: Date.parse('2016-03-15'), status: 'left_early' },
     { date: Date.parse('2016-03-16'), status: 'absent' }
   ]
 end
@@ -79,7 +79,7 @@ RSpec.describe AttendancesController, type: :controller do
   describe "PATCH #update" do
     def attendance_diff
       {
-        status: 'left early'
+        status: "left_early"
       }
     end
 
