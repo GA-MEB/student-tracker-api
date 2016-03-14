@@ -60,4 +60,20 @@ RSpec.describe AttendancesController, type: :controller do
     end
   end
 
+  describe "POST #create" do
+    before(:each) do
+      Attendance.delete_all
+      post :create, {
+        attendance: attendances_params[-1],
+        student_id: student.id
+      }, format: :json
+    end
+    it "is successful" do
+      expect(response).to be_successful
+    end
+    it "renders a JSON response" do
+      expect(JSON.parse(response.body)).not_to be(nil)
+    end
+  end
+
 end
