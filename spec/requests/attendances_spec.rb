@@ -174,6 +174,14 @@ RSpec.describe "Attendances", type: :request do
           }
         }
         expect(response).to_not be_success
+        patch "/attendances/#{attendance.id}", {
+          attendance: {
+            date: attendance.date + 1,
+            status: 'present',
+            student_id: nil
+          }
+        }
+        expect(response).to_not be_success
       end
     end
   end
