@@ -126,19 +126,55 @@ RSpec.describe "Attendances", type: :request do
   end
 
   describe "PATCH /attendances/:id" do
-    it 'updates one attendance record' do
-      new_values = {
-        date: attendance.date + 1,
-        status: 'tardy'
-      }
-      patch "/attendances/#{attendance.id}", { attendance: new_values }
-      expect(response).to be_success
+    context "with valid attributes" do
+      it 'updates one attendance record' do
+        new_values = {
+          date: attendance.date + 1,
+          status: 'tardy'
+        }
+        patch "/attendances/#{attendance.id}", { attendance: new_values }
+        expect(response).to be_success
 
-      attendance_response = JSON.parse(response.body)
-      expect(Date.parse(attendance_response['attendance']['date'])
-        ).to eq(new_values[:date])
-      expect(attendance_response['attendance']['status']
-        ).to eq(new_values[:status])
+        attendance_response = JSON.parse(response.body)
+        expect(Date.parse(attendance_response['attendance']['date'])
+          ).to eq(new_values[:date])
+        expect(attendance_response['attendance']['status']
+          ).to eq(new_values[:status])
+      end
+    end
+    context "with invalid attributes" do
+      it "is unsuccessful" do
+        patch "/attendances/#{attendance.id}", {
+          attendance: {
+            date: nil,
+            status: 'present'
+          }
+        }
+        expect(response).to_not be_success
+        patch "/attendances/#{attendance.id}", {
+          attendance: {
+            date: (attendance.date + 1),
+            status: nil
+          }
+        }
+        expect(response).to_not be_success
+        future_date = Date.today() + 1
+        patch "/attendances/#{attendance.id}", {
+          attendance: {
+            date: future_date,
+            status: 'present'
+          }
+        }
+        expect(response).to_not be_success
+        weekend_date = Date.parse('2016-03-13')
+        patch "/attendances/#{attendance.id}", {
+          attendance: {
+            date: weekend_date,
+            status: 'present'
+          }
+        }
+        expect(response).to_not be_success
+      end
     end
   end
 
