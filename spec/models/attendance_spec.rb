@@ -41,6 +41,11 @@ RSpec.describe Attendance, type: :model do
       no_student_id.valid?
       expect(no_student_id.errors[:student_id]).to include("can't be blank")
     end
+    it "is invalid without a valid student_id value" do
+      invalid_student_id = Attendance.new(student_id: 0)
+      invalid_student_id.valid?
+      expect(invalid_student_id.errors[:student_id]).to include("must be a valid student id")
+    end
     it "is invalid with a date in the future" do
       future_date = Attendance.new(date: Date.today + 1)
       future_date.valid?
