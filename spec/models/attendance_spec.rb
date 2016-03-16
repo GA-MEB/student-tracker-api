@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Attendance, type: :model do
+  before(:all) do
+    Attendance.destroy_all
+  end
   describe 'associations: Attendance' do
     def students_association
       Attendance.reflect_on_association(:student)

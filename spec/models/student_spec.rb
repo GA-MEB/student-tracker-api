@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Student, type: :model do
+  before(:all) do
+    Student.destroy_all
+  end
   describe 'validation: Student' do
     it "is valid with a given name, surname, and student id number" do
       student = Student.new(
