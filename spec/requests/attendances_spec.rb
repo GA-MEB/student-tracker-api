@@ -92,14 +92,6 @@ RSpec.describe "Attendances", type: :request do
           }
         }
         expect(response).to_not be_success
-        invalid_status = 'not here'
-        post "/students/#{student.id}/attendances", {
-          attendance: {
-            date: (attendance.date + 1),
-            status: invalid_status
-          }
-        }
-        expect(response).to_not be_success
         post "/students/#{student.id}/attendances", {
           attendance: {
             date: nil,
