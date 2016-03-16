@@ -48,5 +48,6 @@ ActiveRecord::Schema.define(version: 20160313140705) do
   add_index "students", ["cohort_id"], name: "index_students_on_cohort_id", using: :btree
   add_index "students", ["student_id_number"], name: "index_students_on_student_id_number", unique: true, using: :btree
 
+  add_foreign_key "attendances", "students"
   add_foreign_key "students", "cohorts"
 end
