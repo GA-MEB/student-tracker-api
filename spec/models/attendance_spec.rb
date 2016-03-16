@@ -24,6 +24,11 @@ RSpec.describe Attendance, type: :model do
       future_date.valid?
       expect(future_date.errors[:date]).to include("must not be a future date")
     end
+    it "is invalid with a date that is a weekend" do
+      weekend_date = Attendance.new(date: '2016-01-23')
+      weekend_date.valid?
+      expect(weekend_date.errors[:date]).to include("must not be a weekend")
+    end
   end
   describe 'associations: Attendance' do
     def students_association
