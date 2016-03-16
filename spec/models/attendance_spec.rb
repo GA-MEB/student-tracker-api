@@ -1,6 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Attendance, type: :model do
+  describe 'validations: Attendance' do
+    it "is valid with date and status" do
+      attendance = Attendance.new(
+        date: Date.today,
+        status: 'present'
+      )
+      expect(attendance).to be_valid
+    end
+  end
   describe 'associations: Attendance' do
     def students_association
       Attendance.reflect_on_association(:student)
