@@ -19,6 +19,11 @@ RSpec.describe Attendance, type: :model do
       no_status.valid?
       expect(no_status.errors[:status]).to include("can't be blank")
     end
+    it "is invalid with a date in the future" do
+      future_date = Attendance.new(date: Date.today + 1)
+      future_date.valid?
+      expect(future_date.errors[:date]).to include("must not be a future date")
+    end
   end
   describe 'associations: Attendance' do
     def students_association
