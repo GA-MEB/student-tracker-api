@@ -14,9 +14,15 @@ RSpec.describe Attendance, type: :model do
   end
   describe 'validations: Attendance' do
     it "is valid with date and status" do
+      a_student = Student.create({
+        given_name: 'A',
+        surname: 'Student',
+        student_id_number: 2000
+      })
       attendance = Attendance.new(
         date: Date.today,
-        status: 'present'
+        status: 'present',
+        student_id: a_student.id
       )
       expect(attendance).to be_valid
     end
