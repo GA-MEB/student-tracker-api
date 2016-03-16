@@ -5,10 +5,6 @@ class AttendancesController < ApplicationController
     render json: attendances, root: 'attendances'
   end
 
-  def show
-    render json: @attendance, root: 'attendance'
-  end
-
   def create
     @attendance = attendances.create(attendance_params)
     if @attendance.save
@@ -16,6 +12,10 @@ class AttendancesController < ApplicationController
     else
       render json: @attendance.errors, status: :unprocessable_entity
     end
+  end
+
+  def show
+    render json: @attendance, root: 'attendance'
   end
 
   def update
@@ -41,7 +41,7 @@ class AttendancesController < ApplicationController
   end
 
   def set_attendance
-    @attendance = attendances.find(params[:id])
+    @attendance = Attendance.find(params[:id])
   end
 
 end
