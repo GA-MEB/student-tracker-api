@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :students, only: [:index, :create]
   end
   resources :students, only: [:index, :show, :create, :update, :destroy] do
-    resources :attendances, only: [:index, :show, :create, :update]
+    resources :attendances, only: [:index, :show, :create, :update, :destroy]
   end
 
   # You can have the root of your site routed with "root"

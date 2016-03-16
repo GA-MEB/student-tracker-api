@@ -1,5 +1,5 @@
 class AttendancesController < ApplicationController
-  before_action :set_attendance, only: [:update]
+  before_action :set_attendance, only: [:update, :destroy]
 
   def index
     render json: attendances, root: 'attendances'
@@ -24,6 +24,11 @@ class AttendancesController < ApplicationController
     else
       render json: @attendance.errors, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @attendance.destroy
+    head :no_content
   end
 
   private
