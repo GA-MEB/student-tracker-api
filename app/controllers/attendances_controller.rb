@@ -37,7 +37,7 @@ class AttendancesController < ApplicationController
   end
 
   def attendance_params
-    params.require(:attendance).permit(:date, :status)
+    params.require(:attendance).permit(:date, :status, :student_id)
   end
 
   def set_attendance
