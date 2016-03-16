@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20160313140705) do
     t.integer  "status",     null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "student_id"
+    t.integer  "student_id", null: false
   end
 
   add_index "attendances", ["student_id"], name: "index_attendances_on_student_id", using: :btree

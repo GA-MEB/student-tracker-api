@@ -1,7 +1,7 @@
 class Attendance < ActiveRecord::Base
   enum status: [:present, :absent, :tardy, :left_early]
 
-  validates_presence_of :date, :status
+  validates_presence_of :date, :status, :student_id
   validate :date_is_not_future, :date_is_weekday
 
   belongs_to :student, inverse_of: :attendances
