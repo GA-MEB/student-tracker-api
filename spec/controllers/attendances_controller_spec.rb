@@ -30,14 +30,12 @@ end
 
 RSpec.describe AttendancesController, type: :controller do
   before(:all) do
+    Attendance.destroy_all
+    Student.destroy_all
     Student.create!(student_params)
     attendances_params.each do |params|
       student.attendances << Attendance.create(params)
     end
-  end
-  after(:all) do
-    Student.delete_all
-    Attendance.delete_all
   end
 
   describe "GET #index" do

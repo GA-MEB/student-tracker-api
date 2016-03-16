@@ -30,12 +30,10 @@ end
 
 RSpec.describe "Students", type: :request do
   before(:all) do
+    Student.destroy_all
+    Cohort.destroy_all
     Student.create!(student_params)
     Cohort.create!(cohort_params)
-  end
-  after(:all) do
-    Student.delete_all
-    Cohort.delete_all
   end
 
   describe "GET /students" do

@@ -15,8 +15,10 @@ def cohort
 end
 
 RSpec.describe "Cohorts", type: :request do
-  before(:all) { Cohort.create!(cohort_params) }
-  after(:all) { Cohort.delete_all }
+  before(:all) do
+    Cohort.destroy_all
+    Cohort.create!(cohort_params)
+  end
 
   describe "GET /cohorts" do
     it "gets all cohorts" do
