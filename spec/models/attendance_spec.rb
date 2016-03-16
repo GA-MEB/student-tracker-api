@@ -9,6 +9,16 @@ RSpec.describe Attendance, type: :model do
       )
       expect(attendance).to be_valid
     end
+    it "is invalid without a date" do
+      no_date = Attendance.new(date: nil)
+      no_date.valid?
+      expect(no_date.errors[:date]).to include("can't be blank")
+    end
+    it "is invalid without a status" do
+      no_status = Attendance.new(status: nil)
+      no_status.valid?
+      expect(no_status.errors[:status]).to include("can't be blank")
+    end
   end
   describe 'associations: Attendance' do
     def students_association
