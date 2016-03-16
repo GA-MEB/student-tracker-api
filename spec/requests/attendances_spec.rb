@@ -2,13 +2,13 @@ require 'rails_helper'
 
 def attendances_params
   [
-    { date: Date.parse('2016-03-10'), status: 'present' },
-    { date: Date.parse('2016-03-11'), status: 'present' },
-    { date: Date.parse('2016-03-12'), status: 'present' },
-    { date: Date.parse('2016-03-13'), status: 'tardy' },
-    { date: Date.parse('2016-03-14'), status: 'tardy' },
-    { date: Date.parse('2016-03-15'), status: 'left_early' },
-    { date: Date.parse('2016-03-16'), status: 'absent' }
+    { date: Date.parse('2016-01-11'), status: 'present' },
+    { date: Date.parse('2016-01-12'), status: 'present' },
+    { date: Date.parse('2016-01-13'), status: 'present' },
+    { date: Date.parse('2016-01-14'), status: 'tardy' },
+    { date: Date.parse('2016-01-15'), status: 'tardy' },
+    { date: Date.parse('2016-01-16'), status: 'left_early' },
+    { date: Date.parse('2016-01-17'), status: 'absent' }
   ]
 end
 
@@ -84,14 +84,14 @@ RSpec.describe "Attendances", type: :request do
         #   }
         # }
         # expect(response).to_not be_success
-        # future_date = Date.today() + 1
-        # post "/students/#{student.id}/attendances", {
-        #   attendance: {
-        #     date: future_date,
-        #     status: 'present'
-        #   }
-        # }
-        # expect(response).to_not be_success
+        future_date = Date.today() + 1
+        post "/students/#{student.id}/attendances", {
+          attendance: {
+            date: future_date,
+            status: 'present'
+          }
+        }
+        expect(response).to_not be_success
         post "/students/#{student.id}/attendances", {
           attendance: {
             date: nil,
