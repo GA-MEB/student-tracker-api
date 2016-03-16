@@ -1,12 +1,12 @@
 class AttendancesController < ApplicationController
-  before_action :set_attendance, only: [:update, :destroy]
+  before_action :set_attendance, only: [:show, :update, :destroy]
 
   def index
     render json: attendances, root: 'attendances'
   end
 
   def show
-    render json: attendances.find(params[:id]), root: 'attendance'
+    render json: @attendance, root: 'attendance'
   end
 
   def create
