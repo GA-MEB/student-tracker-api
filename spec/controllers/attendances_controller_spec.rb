@@ -98,4 +98,12 @@ RSpec.describe AttendancesController, type: :controller do
     end
   end
 
+  describe "DELETE #destroy" do
+    it "is successful and returns an empty response" do
+      delete :destroy, student_id: student.id, id: attendance.id
+      expect(response).to be_successful
+      expect(response.body).to be_empty
+    end
+  end
+
 end
