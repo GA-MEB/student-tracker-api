@@ -52,25 +52,54 @@ RSpec.describe "Attendances", type: :request do
   end
 
   describe "POST /students/:student_id/attendances" do
-    it "creates a new attendance record for the given student" do
-      post "/students/#{student.id}/attendances", {
-        attendance: {
-          date: (attendance.date + 1),
-          status: 'present'
+    context "with valid attributes" do
+      it "creates a new attendance record for the given student" do
+        post "/students/#{student.id}/attendances", {
+          attendance: {
+            date: (attendance.date + 1),
+            status: 'present'
+          }
         }
-      }
-      expect(response).to be_success
-      expect(response).to have_http_status(:created)
+        expect(response).to be_success
+        expect(response).to have_http_status(:created)
 
-      attendance_response = JSON.parse(response.body)
-      expect(attendance_response['attendance']['id']
-        ).not_to be_nil
-      expect(attendance_response['attendance']['student_id']
-        ).to eq(student.id)
-      expect(Date.parse(attendance_response['attendance']['date'])
-        ).to eq(attendance.date)
-      expect(attendance_response['attendance']['status']
-        ).to eq(attendance.status)
+        attendance_response = JSON.parse(response.body)
+        expect(attendance_response['attendance']['id']
+          ).not_to be_nil
+        expect(attendance_response['attendance']['student_id']
+          ).to eq(student.id)
+        expect(Date.parse(attendance_response['attendance']['date'])
+          ).to eq(attendance.date)
+        expect(attendance_response['attendance']['status']
+          ).to eq(attendance.status)
+      end
+    end
+    context "with invalid attributes" do
+      it "is unsuccessful" do
+        weekend_date = Date.parse('2016-03-13')
+        post "/students/#{student.id}/attendances", {
+          attendance: {
+            date: weekend_date,
+            status: 'present'
+          }
+        }
+        expect(response).to_not be_success
+        future_date = Date.today() + 1
+        post "/students/#{student.id}/attendances", {
+          attendance: {
+            date: future_date,
+            status: 'present'
+          }
+        }
+        expect(response).to_not be_success
+        invalid_status = 'not here'
+        post "/students/#{student.id}/attendances", {
+          attendance: {
+            date: (attendance.date + 1),
+            status: invalid_status
+          }
+        }
+      end
     end
   end
 
