@@ -51,21 +51,6 @@ RSpec.describe "Attendances", type: :request do
     end
   end
 
-  describe "GET /students/:student_id/attendances/:id" do
-    it "retrieves the given attendance record" do
-      get "/students/#{student.id}/attendances/#{attendance.id}"
-      expect(response).to be_success
-
-      attendance_response = JSON.parse(response.body)
-      expect(attendance_response['attendance']['id']
-        ).to eq(attendance.id)
-      expect(Date.parse(attendance_response['attendance']['date'])
-        ).to eq(attendance.date)
-      expect(attendance_response['attendance']['status']
-        ).to eq(attendance.status)
-    end
-  end
-
   describe "POST /students/:student_id/attendances" do
     it "creates a new attendance record for the given student" do
       post "/students/#{student.id}/attendances", {
@@ -89,13 +74,28 @@ RSpec.describe "Attendances", type: :request do
     end
   end
 
-  describe "PATCH /students/:student_id/attendances/:id" do
+  describe "GET /attendances/:id" do
+    it "retrieves the given attendance record" do
+      get "/attendances/#{attendance.id}"
+      expect(response).to be_success
+
+      attendance_response = JSON.parse(response.body)
+      expect(attendance_response['attendance']['id']
+        ).to eq(attendance.id)
+      expect(Date.parse(attendance_response['attendance']['date'])
+        ).to eq(attendance.date)
+      expect(attendance_response['attendance']['status']
+        ).to eq(attendance.status)
+    end
+  end
+
+  describe "PATCH /attendances/:id" do
     it 'updates one attendance record' do
       new_values = {
         date: attendance.date + 1,
         status: 'tardy'
       }
-      patch "/students/#{student.id}/attendances/#{attendance.id}", { attendance: new_values }
+      patch "/attendances/#{attendance.id}", { attendance: new_values }
       expect(response).to be_success
 
       attendance_response = JSON.parse(response.body)
@@ -106,11 +106,11 @@ RSpec.describe "Attendances", type: :request do
     end
   end
 
-  describe "DELETE /students/:student_id/attendances/:id" do
+  describe "DELETE /attendances/:id" do
     it 'destroys one attendance record' do
       old_count = student.attendances.length
 
-      delete "/students/#{student.id}/attendances/#{attendance.id}"
+      delete "/attendances/#{attendance.id}"
       expect(response).to be_success
       expect(response.body).to be_empty
       expect(student.attendances.length - old_count).to eq(-1)
