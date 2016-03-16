@@ -7,8 +7,8 @@ def attendances_params
     { date: Date.parse('2016-01-13'), status: 'present' },
     { date: Date.parse('2016-01-14'), status: 'tardy' },
     { date: Date.parse('2016-01-15'), status: 'tardy' },
-    { date: Date.parse('2016-01-16'), status: 'left_early' },
-    { date: Date.parse('2016-01-17'), status: 'absent' }
+    { date: Date.parse('2016-01-18'), status: 'left_early' },
+    { date: Date.parse('2016-01-19'), status: 'absent' }
   ]
 end
 
@@ -76,14 +76,14 @@ RSpec.describe "Attendances", type: :request do
     end
     context "with invalid attributes" do
       it "is unsuccessful" do
-        # weekend_date = Date.parse('2016-03-13')
-        # post "/students/#{student.id}/attendances", {
-        #   attendance: {
-        #     date: weekend_date,
-        #     status: 'present'
-        #   }
-        # }
-        # expect(response).to_not be_success
+        weekend_date = Date.parse('2016-03-13')
+        post "/students/#{student.id}/attendances", {
+          attendance: {
+            date: weekend_date,
+            status: 'present'
+          }
+        }
+        expect(response).to_not be_success
         future_date = Date.today() + 1
         post "/students/#{student.id}/attendances", {
           attendance: {

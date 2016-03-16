@@ -7,8 +7,8 @@ def attendances_params
     { date: Date.parse('2016-01-13'), status: 'present' },
     { date: Date.parse('2016-01-14'), status: 'tardy' },
     { date: Date.parse('2016-01-15'), status: 'tardy' },
-    { date: Date.parse('2016-01-16'), status: 'left_early' },
-    { date: Date.parse('2016-01-17'), status: 'absent' }
+    { date: Date.parse('2016-01-18'), status: 'left_early' },
+    { date: Date.parse('2016-01-19'), status: 'absent' }
   ]
 end
 
