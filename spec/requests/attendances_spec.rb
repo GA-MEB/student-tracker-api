@@ -106,4 +106,15 @@ RSpec.describe "Attendances", type: :request do
     end
   end
 
+  describe "DELETE /students/:student_id/attendances/:id" do
+    it 'destroys one attendance record' do
+      old_count = student.attendances.length
+
+      delete "/students/#{student.id}/attendances/#{attendance.id}"
+      expect(response).to be_success
+      expect(response.body).to be_empty
+      expect(student.attendances.length - old_count).to eq(-1)
+    end
+  end
+
 end
