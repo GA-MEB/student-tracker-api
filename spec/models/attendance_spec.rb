@@ -23,7 +23,7 @@ RSpec.describe Attendance, type: :model do
         student_id_number: 2000
       })
       attendance = Attendance.new(
-        date: Date.today,
+        date: '2016-03-08',
         status: 'present',
         student_id: a_student.id
       )
