@@ -5,7 +5,10 @@ Rails.application.routes.draw do
   resources :cohorts, only: [:index, :show, :create, :update, :destroy] do
     resources :students, only: [:index, :create]
   end
-  resources :students, only: [:index, :show, :create, :update, :destroy]
+  resources :students, only: [:index, :show, :create, :update, :destroy] do
+    resources :attendances, only: [:index, :create]
+  end
+  resources :attendances, only: [:show, :update, :destroy]
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'

@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Cohort, type: :model do
+  before(:all) do
+    Cohort.destroy_all
+  end
   describe 'validations: Cohort' do
     it "is valid with cohort number, start date, and end date" do
       cohort = Cohort.new(

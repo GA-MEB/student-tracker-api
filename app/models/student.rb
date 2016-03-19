@@ -9,4 +9,5 @@ class Student < ActiveRecord::Base
     }
 
   belongs_to :cohort, inverse_of: :students
+  has_many :attendances, inverse_of: :student, dependent: :destroy
 end

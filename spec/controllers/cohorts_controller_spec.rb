@@ -15,8 +15,10 @@ def cohort
 end
 
 RSpec.describe CohortsController, type: :controller do
-  before(:all) { Cohort.create!(cohort_params) }
-  after(:all) { Cohort.delete_all }
+  before(:all) do
+    Cohort.destroy_all
+    Cohort.create!(cohort_params)
+  end
 
   describe "GET #index" do
     before(:each) { get :index }
